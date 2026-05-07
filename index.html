@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunag | Digital Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% }
+    50% { background-position: 100% }
+    100% { background-position: 0% }
+}
+
+.container {
+    width: 90%;
+    max-width: 420px;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border-radius: 25px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,255,255,0.3);
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: block;
+    margin: 12px 0;
+    padding: 14px;
+    border-radius: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+}
+
+/* Dropdown */
+.dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease;
+}
+
+footer {
+    margin-top: 15px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 300px;
+}
+
+.visit-btn {
+    display: block;
+    padding: 12px;
+    margin-top: 15px;
+    background: #00c6ff;
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+}
+
+.close-btn {
+    margin-top: 10px;
+    padding: 8px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h1>⚡ Sunag</h1>
+<p>💡 Tech Enthusiast | Software Aficionado</p>
+
+<div class="btn" onclick="openPopup('Portfolio','Explore my full work and projects','https://sunagp.github.io/portfolio/index.html')">
+🚀 Portfolio
+</div>
+
+<div class="btn" onclick="openPopup('DSA Roadmap','Structured guide for coding & interviews','https://drive.google.com/drive/folders/1CGA2bmr52DB5JafXbklV1UwKhKsLVwUP')">
+📘 DSA Roadmap
+</div>
+
+<div class="btn" onclick="openPopup('Research Paper','IEEE cryptography research work','https://ieeexplore.ieee.org/abstract/document/10127657')">
+🔐 Research Paper
+</div>
+
+<div class="btn" onclick="openPopup('Ravana Files','Explore mythology content','https://www.youtube.com/@TheRavanafiles/')">
+🔥 Ravana Files
+</div>
+
+<div class="btn" onclick="toggleDropdown()">
+🎥 Short Movies ▼
+</div>
+
+<div class="dropdown-content" id="movies">
+<div class="btn" onclick="openPopup('TATVA','Life meaning story','https://www.youtube.com/watch?v=p5mfVBpgZD0')">TATVA</div>
+<div class="btn" onclick="openPopup('AAROHI','Emotional journey','https://www.youtube.com/watch?v=qBbY3yFbKbQ')">AAROHI</div>
+<div class="btn" onclick="openPopup('WTF','Suspense story','https://www.youtube.com/watch?v=wr-a6qxc0do')">WTF</div>
+<div class="btn" onclick="openPopup('DRAKKER','Dark cinematic story','https://www.youtube.com/watch?v=IhhJHxDi-Kg')">DRAKKER</div>
+<div class="btn" onclick="openPopup('HARAG','Kannada emotional story','https://www.youtube.com/watch?v=Krb4SZniTZY')">HARAG</div>
+</div>
+
+<footer>Made with ⚡ by Sunag</footer>
+
+</div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+<div class="popup-content">
+<h2 id="title"></h2>
+<p id="desc"></p>
+<a id="link" class="visit-btn" target="_blank">Visit</a>
+<button class="close-btn" onclick="closePopup()">Close</button>
+</div>
+</div>
+
+<script>
+// Popup
+function openPopup(title, desc, link) {
+    document.getElementById("title").innerText = title;
+    document.getElementById("desc").innerText = desc;
+    document.getElementById("link").href = link;
+    document.getElementById("popup").style.display = "flex";
+}
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+// Dropdown
+function toggleDropdown() {
+    let el = document.getElementById("movies");
+    el.style.maxHeight = el.style.maxHeight ? null : el.scrollHeight + "px";
+}
+
+// 3D tilt
+const card = document.querySelector(".card");
+
+document.addEventListener("mousemove", (e) => {
+    let x = (window.innerWidth / 2 - e.clientX) / 25;
+    let y = (window.innerHeight / 2 - e.clientY) / 25;
+    card.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(1.03)`;
+});
+
+document.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateY(0) rotateX(0)";
+});
+</script>
+
+</body>
+</html>
