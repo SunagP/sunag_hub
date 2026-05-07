@@ -4,212 +4,263 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sunag | Digital Hub</title>
-
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-
-body {
-    height: 100vh;
-    background: linear-gradient(270deg, #0f2027, #203a43, #2c5364);
-    background-size: 400% 400%;
-    animation: gradientMove 12s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% }
-    50% { background-position: 100% }
-    100% { background-position: 0% }
-}
-
-.container {
-    width: 90%;
-    max-width: 420px;
-}
-
-.card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(18px);
-    border-radius: 25px;
-    padding: 30px;
-    text-align: center;
-    box-shadow: 0 0 40px rgba(0,255,255,0.3);
-    transform-style: preserve-3d;
-    transition: transform 0.1s ease;
-}
-
-h1 {
-    font-size: 30px;
-}
-
-p {
-    font-size: 14px;
-    opacity: 0.8;
-    margin-bottom: 20px;
-}
-
-.btn {
-    display: block;
-    margin: 12px 0;
-    padding: 14px;
-    border-radius: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    color: white;
-    background: linear-gradient(135deg, #00f2fe, #4facfe);
-    transition: 0.3s;
-}
-
-.btn:hover {
-    transform: scale(1.05);
-    background: linear-gradient(135deg, #ff6a00, #ee0979);
-}
-
-/* Dropdown */
-.dropdown-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: 0.4s ease;
-}
-
-footer {
-    margin-top: 15px;
-    font-size: 12px;
-    opacity: 0.6;
-}
-
-/* POPUP */
-.popup {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.popup-content {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(15px);
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 300px;
-}
-
-.visit-btn {
-    display: block;
-    padding: 12px;
-    margin-top: 15px;
-    background: #00c6ff;
-    text-decoration: none;
-    color: white;
-    border-radius: 10px;
-}
-
-.close-btn {
-    margin-top: 10px;
-    padding: 8px;
-    background: red;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<div class="container">
-<div class="card">
+<canvas id="particles"></canvas>
 
-<h1>⚡ Sunag</h1>
-<p>💡 Tech Enthusiast | Software Aficionado</p>
+<div class="noise-overlay"></div>
 
-<div class="btn" onclick="openPopup('Portfolio','Explore my full work and projects','https://sunagp.github.io/portfolio/index.html')">
-🚀 Portfolio
+<nav class="navbar" id="navbar">
+    <div class="nav-brand">
+        <span class="brand-icon">S</span>
+        <span class="brand-text">Sunag Hub</span>
+    </div>
+    <div class="nav-status" onclick="toggleContactPanel()" id="navStatus">
+        <span class="status-dot"></span>
+        <span class="status-text">Available for collaboration</span>
+    </div>
+    <div class="contact-panel" id="contactPanel">
+        <div class="contact-panel-header">
+            <h4>Let's Connect</h4>
+            <button class="contact-panel-close" onclick="closeContactPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <a href="tel:9686480847">9686480847</a>
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:sunag.p3007@gmail.com">sunag.p3007@gmail.com</a>
+        </div>
+        <div class="contact-item">
+            <i class="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/sunag3007/" target="_blank">@sunag3007</a>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <section class="hero-section">
+        <div class="hero-badge">
+            <i class="fas fa-bolt"></i>
+            <span>Digital Creator & Engineer</span>
+        </div>
+        <h1 class="hero-title">
+            <span class="title-line">Hi, I'm <span class="highlight">Sunag</span></span>
+            <span class="title-line subtitle">Building at the intersection of</span>
+            <span class="title-line subtitle">
+                <span class="rotating-text" id="rotatingText"></span>
+            </span>
+        </h1>
+        <p class="hero-description">
+            Software engineer, researcher, and creative storyteller. I craft digital experiences 
+            that blend technical excellence with creative vision — from cryptographic research 
+            to cinematic narratives.
+        </p>
+        <!-- <div class="hero-stats">
+            <div class="stat-item">
+                <span class="stat-number" data-target="5">0</span>
+                <span class="stat-label">Short Films</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="1">0</span>
+                <span class="stat-label">IEEE Paper</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="10">0</span><span class="stat-plus">+</span>
+                <span class="stat-label">Projects</span>
+            </div>
+        </div> -->
+    </section>
+
+    <section class="links-section">
+        <h2 class="section-title">
+            <span class="section-icon"><i class="fas fa-compass"></i></span>
+            Explore My Universe
+        </h2>
+
+        <div class="links-grid">
+            <div class="link-card featured" onclick="openModal('portfolio')">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Portfolio</h3>
+                    <p>A curated showcase of my software projects, design work, and technical experiments. 
+                       From full-stack web applications to system-level tools — each project reflects 
+                       my passion for clean architecture and impactful solutions.</p>
+                    <span class="card-tag">Featured</span>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <div class="link-card" onclick="openModal('dsa')">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="card-content">
+                    <h3>DSA Roadmap</h3>
+                    <p>A meticulously structured guide covering Data Structures & Algorithms from fundamentals 
+                       to advanced patterns. Designed for cracking technical interviews at top-tier companies 
+                       with curated problem sets and strategic approaches.</p>
+                    <span class="card-tag">Resource</span>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <div class="link-card" onclick="openModal('research')">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-shield-halved"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Research Paper</h3>
+                    <p>Published IEEE research on advanced cryptographic techniques. This paper explores 
+                       novel approaches to data security, contributing to the evolving landscape of 
+                       information protection and encrypted communication systems.</p>
+                    <span class="card-tag">IEEE Published</span>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <div class="link-card" onclick="openModal('ravana')">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Ravana Files</h3>
+                    <p>A YouTube channel dedicated to exploring the untold narratives of Indian mythology. 
+                       Deep dives into ancient texts, philosophical interpretations, and connecting 
+                       timeless wisdom with modern perspectives.</p>
+                    <span class="card-tag">YouTube</span>
+                </div>
+                <div class="card-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </div>
+
+            <div class="link-card dropdown-card" onclick="toggleFilmsDropdown(event)">
+                <div class="card-glow"></div>
+                <div class="card-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <div class="card-content">
+                    <h3>Short Films</h3>
+                    <p>Cinematic stories exploring human emotions, philosophy, and the darker corners 
+                       of storytelling. Each film is independently written, directed, and produced.</p>
+                    <span class="card-tag">5 Films</span>
+                </div>
+                <div class="card-arrow dropdown-arrow" id="filmsArrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+
+            <div class="films-dropdown" id="filmsDropdown">
+                <div class="film-card" onclick="openModal('tatva')">
+                    <div class="film-number">01</div>
+                    <div class="film-info">
+                        <h4>TATVA</h4>
+                        <p>A contemplative exploration of life's fundamental meaning — what drives us, 
+                           what defines us, and the essence that holds everything together.</p>
+                    </div>
+                    <div class="film-genre">Philosophy</div>
+                </div>
+
+                <div class="film-card" onclick="openModal('aarohi')">
+                    <div class="film-number">02</div>
+                    <div class="film-info">
+                        <h4>AAROHI</h4>
+                        <p>An emotional odyssey through love, loss, and the resilience of the human spirit. 
+                           A story that resonates with anyone who has dared to feel deeply.</p>
+                    </div>
+                    <div class="film-genre">Drama</div>
+                </div>
+
+                <div class="film-card" onclick="openModal('wtf')">
+                    <div class="film-number">03</div>
+                    <div class="film-info">
+                        <h4>WTF</h4>
+                        <p>A gripping suspense narrative that keeps you on the edge — unexpected twists, 
+                           unreliable perspectives, and a climax that redefines everything you thought you knew.</p>
+                    </div>
+                    <div class="film-genre">Comedy</div>
+                </div>
+
+                <div class="film-card" onclick="openModal('drakker')">
+                    <div class="film-number">04</div>
+                    <div class="film-info">
+                        <h4>DRAKKER</h4>
+                        <p>A dark cinematic piece that ventures into the shadows of human nature. 
+                           Visually striking and narratively bold, it challenges conventional storytelling norms.</p>
+                    </div>
+                    <div class="film-genre">Dark Cinema</div>
+                </div>
+
+                <div class="film-card" onclick="openModal('harag')">
+                    <div class="film-number">05</div>
+                    <div class="film-info">
+                        <h4>HARAG</h4>
+                        <p>A Kannada-language emotional narrative rooted in cultural identity. 
+                           Explores regional storytelling with universal themes of anger, redemption, and acceptance.</p>
+                    </div>
+                    <div class="film-genre">Moral Story</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-icon small">S</span>
+                <span>Crafted with precision by Sunag</span>
+            </div>
+            <div class="footer-links">
+                <a href="https://sunagp.github.io/portfolio/index.html" target="_blank" aria-label="Portfolio">
+                    <i class="fas fa-globe"></i>
+                </a>
+                <a href="https://www.youtube.com/@TheRavanafiles/" target="_blank" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.instagram.com/sunag3007/" target="_blank" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+        <button class="modal-close" onclick="closeModalDirect()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-icon" id="modalIcon"></div>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <a id="modalLink" class="modal-cta" target="_blank">
+            <span>Visit</span>
+            <i class="fas fa-external-link-alt"></i>
+        </a>
+    </div>
 </div>
 
-<div class="btn" onclick="openPopup('DSA Roadmap','Structured guide for coding & interviews','https://drive.google.com/drive/folders/1CGA2bmr52DB5JafXbklV1UwKhKsLVwUP')">
-📘 DSA Roadmap
-</div>
-
-<div class="btn" onclick="openPopup('Research Paper','IEEE cryptography research work','https://ieeexplore.ieee.org/abstract/document/10127657')">
-🔐 Research Paper
-</div>
-
-<div class="btn" onclick="openPopup('Ravana Files','Explore mythology content','https://www.youtube.com/@TheRavanafiles/')">
-🔥 Ravana Files
-</div>
-
-<div class="btn" onclick="toggleDropdown()">
-🎥 Short Movies ▼
-</div>
-
-<div class="dropdown-content" id="movies">
-<div class="btn" onclick="openPopup('TATVA','Life meaning story','https://www.youtube.com/watch?v=p5mfVBpgZD0')">TATVA</div>
-<div class="btn" onclick="openPopup('AAROHI','Emotional journey','https://www.youtube.com/watch?v=qBbY3yFbKbQ')">AAROHI</div>
-<div class="btn" onclick="openPopup('WTF','Suspense story','https://www.youtube.com/watch?v=wr-a6qxc0do')">WTF</div>
-<div class="btn" onclick="openPopup('DRAKKER','Dark cinematic story','https://www.youtube.com/watch?v=IhhJHxDi-Kg')">DRAKKER</div>
-<div class="btn" onclick="openPopup('HARAG','Kannada emotional story','https://www.youtube.com/watch?v=Krb4SZniTZY')">HARAG</div>
-</div>
-
-<footer>Made with ⚡ by Sunag</footer>
-
-</div>
-</div>
-
-<!-- POPUP -->
-<div class="popup" id="popup">
-<div class="popup-content">
-<h2 id="title"></h2>
-<p id="desc"></p>
-<a id="link" class="visit-btn" target="_blank">Visit</a>
-<button class="close-btn" onclick="closePopup()">Close</button>
-</div>
-</div>
-
-<script>
-// Popup
-function openPopup(title, desc, link) {
-    document.getElementById("title").innerText = title;
-    document.getElementById("desc").innerText = desc;
-    document.getElementById("link").href = link;
-    document.getElementById("popup").style.display = "flex";
-}
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
-}
-
-// Dropdown
-function toggleDropdown() {
-    let el = document.getElementById("movies");
-    el.style.maxHeight = el.style.maxHeight ? null : el.scrollHeight + "px";
-}
-
-// 3D tilt
-const card = document.querySelector(".card");
-
-document.addEventListener("mousemove", (e) => {
-    let x = (window.innerWidth / 2 - e.clientX) / 25;
-    let y = (window.innerHeight / 2 - e.clientY) / 25;
-    card.style.transform = `rotateY(${x}deg) rotateX(${y}deg) scale(1.03)`;
-});
-
-document.addEventListener("mouseleave", () => {
-    card.style.transform = "rotateY(0) rotateX(0)";
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
