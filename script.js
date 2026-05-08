@@ -18,6 +18,12 @@ const modalData = {
         desc: 'IEEE-published research exploring advanced cryptographic methodologies. This work contributes to the domain of secure communication and data protection, addressing modern challenges in information security.',
         link: 'https://ieeexplore.ieee.org/abstract/document/10127657'
     },
+    ebook: {
+        icon: '<i class="fas fa-book"></i>',
+        title: 'E-Book — OOPs Concepts',
+        desc: 'BrushStrokes of OOP Wisdom — a thoughtfully crafted e-book that breaks down Object-Oriented Programming into digestible, intuitive concepts. Covers the four pillars (Encapsulation, Inheritance, Polymorphism, Abstraction) with real-world examples and clean illustrations.',
+        link: 'https://sunagpis19.gumroad.com/l/xvqplkn'
+    },
     ravana: {
         icon: '<i class="fas fa-fire"></i>',
         title: 'Ravana Files',
